@@ -27,6 +27,10 @@ const appTheme = {
     Select: {
       optionSelectedColor: "rgb(255, 255, 255)",
     },
+    TextArea: {
+      hoverBg: "rgb(23,23,23)",
+      hoverBorderColor: "rgb(255,255,255)",
+    },
   },
 };
 
