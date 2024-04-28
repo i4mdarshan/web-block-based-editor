@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import update from "immutability-helper";
+import React, { useState, useCallback } from "react";
 import { Row, Col, Button, Dropdown, Space } from "antd";
 import {
   DownOutlined,
@@ -6,6 +7,8 @@ import {
   AreaChartOutlined,
 } from "@ant-design/icons";
 import { Block } from "../components";
+import { ItemTypes } from "../components/DnDConstants";
+import { useDrop } from "react-dnd";
 
 const Home = () => {
   const newBlockRow = {
@@ -51,8 +54,28 @@ const Home = () => {
   };
 
   const renderBlockRows = () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const moveBlock = useCallback((dragIndex, hoverIndex) => {
+      setBlockRows((prevBlocks) =>
+        update(prevBlocks, {
+          $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, prevBlocks[dragIndex]],
+          ],
+        })
+      );
+    }, []);
+
     return blockRows.map((block, index) => {
-      return <Block key={index} inputValue={block.blockContent} />;
+      return (
+        <Block
+          id={block.blockId}
+          key={index}
+          index={index}
+          inputValue={block.blockContent}
+          moveBlock={moveBlock}
+        />
+      );
     });
   };
 

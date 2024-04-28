@@ -1,4 +1,6 @@
 import { ConfigProvider } from "antd";
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import { BrowserRouter } from "react-router-dom";
 import Router from "./routes";
 
@@ -10,6 +12,7 @@ const appTheme = {
     borderRadius: 3,
     wireframe: false,
     colorBgBase: "#ffffff",
+    // colorBgContainer: "red",
   },
   components: {
     Layout: {
@@ -27,7 +30,7 @@ const appTheme = {
     Select: {
       optionSelectedColor: "rgb(255, 255, 255)",
     },
-    TextArea: {
+    textAreaStyles: {
       hoverBg: "rgb(23,23,23)",
       hoverBorderColor: "rgb(255,255,255)",
     },
@@ -38,11 +41,13 @@ function App() {
   return (
     <>
       <ConfigProvider theme={appTheme}>
-        <BrowserRouter>
-          <div className='App'>
-            <Router />
-          </div>
-        </BrowserRouter>
+        <DndProvider backend={HTML5Backend}>
+          <BrowserRouter>
+            <div className='App'>
+              <Router />
+            </div>
+          </BrowserRouter>
+        </DndProvider>
       </ConfigProvider>
     </>
   );
