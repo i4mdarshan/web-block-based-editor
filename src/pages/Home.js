@@ -1,21 +1,18 @@
-import update from "immutability-helper";
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { Row, Col, Button, Dropdown, Space } from "antd";
 import {
   DownOutlined,
   FontSizeOutlined,
   AreaChartOutlined,
 } from "@ant-design/icons";
-import { Block } from "../components";
-import { ItemTypes } from "../components/DnDConstants";
-import { useDrop } from "react-dnd";
+import { BlockList } from "../components";
 
 const Home = () => {
   const newBlockRow = {
     blockId: Date.now(),
     blockContent: "",
   };
-  const [blockRows, setBlockRows] = useState([
+  const [blocks, setBlocks] = useState([
     {
       blockId: Date.now(),
       blockContent: "",
@@ -25,7 +22,7 @@ const Home = () => {
   const handleMenuClick = ({ key }) => {
     switch (key) {
       case "add-text":
-        setBlockRows([...blockRows, newBlockRow]);
+        setBlocks([...blocks, newBlockRow]);
         break;
       case "add-image":
         console.log("Handle add-image row click!");
@@ -51,32 +48,6 @@ const Home = () => {
   const menuProps = {
     items,
     onClick: handleMenuClick,
-  };
-
-  const renderBlockRows = () => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const moveBlock = useCallback((dragIndex, hoverIndex) => {
-      setBlockRows((prevBlocks) =>
-        update(prevBlocks, {
-          $splice: [
-            [dragIndex, 1],
-            [hoverIndex, 0, prevBlocks[dragIndex]],
-          ],
-        })
-      );
-    }, []);
-
-    return blockRows.map((block, index) => {
-      return (
-        <Block
-          id={block.blockId}
-          key={index}
-          index={index}
-          inputValue={block.blockContent}
-          moveBlock={moveBlock}
-        />
-      );
-    });
   };
 
   return (
@@ -107,7 +78,7 @@ const Home = () => {
               display: "flex",
             }}
           >
-            {renderBlockRows()}
+            <BlockList blocks={blocks} setBlocks={setBlocks} />
           </Space>
         </Col>
         <Col xs={0} md={2} lg={2}></Col>

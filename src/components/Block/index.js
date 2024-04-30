@@ -1,57 +1,69 @@
 import React, { useState, useRef } from "react";
 import { ItemTypes } from "./../DnDConstants";
 import { useDrag, useDrop } from "react-dnd";
-import { Button, Col, Input, Row, Space, theme } from "antd";
+import { Button, Col, Input, Row, Space } from "antd";
 import { HolderOutlined, DeleteOutlined } from "@ant-design/icons";
-const { TextArea, Group } = Input;
+const { TextArea } = Input;
 
 const index = ({ id, index, inputValue, moveBlock }) => {
   // const {
   //   components: { textAreaStyles },
   // } = theme.useToken();
 
+  const blockStyle = {
+    fontWeight: "bold",
+    cursor: "move",
+  };
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [value, setValue] = useState(inputValue);
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const ref = useRef(null);
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [{ handlerId }, drop] = useDrop({
     accept: ItemTypes.BLOCK,
-    collect(monitor) {
-      return {
-        handlerId: monitor.getHandlerId(),
-      };
-    },
     hover(item, monitor) {
       if (!ref.current) {
         return;
       }
+
       const dragIndex = item.index;
       const hoverIndex = index;
+
       // Don't replace items with themselves
       if (dragIndex === hoverIndex) {
         return;
       }
+
       // Determine rectangle on screen
       const hoverBoundingBlock = ref.current?.getBoundingClientRect();
+
       // Get vertical middle
       const hoverMiddleY =
         (hoverBoundingBlock.bottom - hoverBoundingBlock.top) / 2;
+
       // Determine mouse position
-      const clientOffset = monitor.getClientOffset();
+      const mousePosition = monitor.getClientOffset();
+
       // Get pixels to the top
-      const hoverClientY = clientOffset.y - hoverBoundingBlock.top;
+      const hoverClientY = mousePosition.y - hoverBoundingBlock.top;
+
       // Only perform the move when the mouse has crossed half of the items height
       // When dragging downwards, only move when the cursor is below 50%
       // When dragging upwards, only move when the cursor is above 50%
+
       // Dragging downwards
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
       }
+
       // Dragging upwards
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
+
       // Time to actually perform the action
       moveBlock(dragIndex, hoverIndex);
       // Note: we're mutating the monitor item here!
@@ -60,7 +72,13 @@ const index = ({ id, index, inputValue, moveBlock }) => {
       // to avoid expensive index searches.
       item.index = hoverIndex;
     },
+    collect(monitor) {
+      return {
+        handlerId: monitor.getHandlerId(),
+      };
+    },
   });
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.BLOCK,
@@ -71,17 +89,15 @@ const index = ({ id, index, inputValue, moveBlock }) => {
       isDragging: monitor.isDragging(),
     }),
   });
+
   const opacity = isDragging ? 0 : 1;
+
   drag(drop(ref));
 
   return (
     <div
       ref={ref}
-      style={{
-        opacity: isDragging ? 0.5 : 1,
-        // fontSize: 25,
-        fontWeight: "bold",
-      }}
+      style={{ ...blockStyle, opacity }}
       data-handler-id={handlerId}
     >
       <Row>
@@ -93,12 +109,7 @@ const index = ({ id, index, inputValue, moveBlock }) => {
                 justifyContent: "space-between",
               }}
             >
-              <Button
-                type='text'
-                style={{
-                  cursor: "move",
-                }}
-              >
+              <Button type='text'>
                 <HolderOutlined />
               </Button>
               <TextArea
