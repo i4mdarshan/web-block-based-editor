@@ -1,7 +1,17 @@
-const Home = () => {
-  return (
-    <div>Home</div>
-  )
-}
+import { Button } from "@/components/ui/button";
 
-export default Home
+const Home = () => {
+  const handleSignOut = () => {
+    console.log("Clicked logout");
+  };
+
+  return (
+    <div>
+      <Button type='button' onClick={handleSignOut}>
+        Sign Out
+      </Button>
+    </div>
+  );
+};
+
+export default Home;
