@@ -20,7 +20,6 @@ const SignUpForm = () => {
     resolver: zodResolver(SignUpValidation),
     defaultValues: {
       name: "",
-      username: "",
       email: "",
       password: "",
     },
@@ -39,7 +38,7 @@ const SignUpForm = () => {
             Create a new account
           </h2>
           <p className='text-light-3 small-medium md:base-regular mt-2'>
-          To use the editor, please enter your details
+            To use the editor, please enter your details
           </p>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -51,19 +50,6 @@ const SignUpForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input type='text' className='shad-input' {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='username'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
                   <FormControl>
                     <Input type='text' className='shad-input' {...field} />
                   </FormControl>
