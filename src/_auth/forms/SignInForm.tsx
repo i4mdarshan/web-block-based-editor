@@ -8,13 +8,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { SignInValidation } from "@/lib/validation";
+import { signInAccount } from "@/lib/appwrite/api";
+import { useUserContext } from "@/context/AuthContext";
+import { toast } from "sonner";
+import { Loader } from "lucide-react";
 
 const SignInForm = () => {
+  const { checkUserAuthorization, isLoading } = useUserContext();
+  const navigate = useNavigate();
   // 1. Define your form.
   const form = useForm<z.infer<typeof SignInValidation>>({
     resolver: zodResolver(SignInValidation),
@@ -25,8 +31,24 @@ const SignInForm = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof SignInValidation>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof SignInValidation>) {
+    const session = await signInAccount({
+      email: values.email,
+      password: values.password,
+    });
+
+    if (!session) {
+      toast.error("Sign In failed. Please try again.");
+    }
+
+    const isLoggedIn = await checkUserAuthorization();
+
+    if (isLoggedIn) {
+      form.reset();
+      navigate("/");
+    } else {
+      toast.error("Sign In failed. Please try again.");
+    }
   }
   return (
     <>
@@ -69,15 +91,22 @@ const SignInForm = () => {
                 </FormItem>
               )}
             />
-            <Button type='submit' className='shad-button_primary'>
-              Sign In
+            <Button
+              type='submit'
+              className='shad-button_primary'
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <p>
+                  <Loader />
+                </p>
+              ) : (
+                "Sign In"
+              )}
             </Button>
             <p className='text-small-regular text-light-2 text-center mt-2'>
               Don't have an account?
-              <Link
-                to='/sign-up'
-                className='font-semibold ml-1'
-              >
+              <Link to='/sign-up' className='font-semibold ml-1'>
                 Sign Up
               </Link>
             </p>

@@ -9,7 +9,7 @@ export type IUser = {
 export type INewUser = {
   name: string;
   email: string;
-  username: string;
+  username?: string;
   password: string;
 };
 

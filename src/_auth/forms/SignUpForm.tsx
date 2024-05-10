@@ -8,13 +8,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { SignUpValidation } from "@/lib/validation";
+import { createUserAccount, signInAccount } from "@/lib/appwrite/api";
+import { toast } from "sonner";
+import { useUserContext } from "@/context/AuthContext";
+import { Loader } from "lucide-react";
 
 const SignUpForm = () => {
+  const { checkUserAuthorization, isLoading } = useUserContext();
+  const navigate = useNavigate();
   // 1. Define your form.
   const form = useForm<z.infer<typeof SignUpValidation>>({
     resolver: zodResolver(SignUpValidation),
@@ -26,8 +32,31 @@ const SignUpForm = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof SignUpValidation>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof SignUpValidation>) {
+    // create account using appwrite API
+    const newUser = await createUserAccount(values);
+
+    if (!newUser) {
+      return toast.error("Sign Up failed. Please try again.");
+    }
+
+    const session = await signInAccount({
+      email: values.email,
+      password: values.password,
+    });
+
+    if (!session) {
+      return toast.error("Sign In failed. Please try again.");
+    }
+
+    const isLoggedIn = await checkUserAuthorization();
+
+    if (isLoggedIn) {
+      form.reset();
+      navigate("/");
+    } else {
+      return toast.error("Sign Up failed. Please try again.");
+    }
   }
   return (
     <>
@@ -83,8 +112,18 @@ const SignUpForm = () => {
                 </FormItem>
               )}
             />
-            <Button type='submit' className='shad-button_primary'>
-              Sign Up
+            <Button
+              type='submit'
+              className='shad-button_primary'
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <p>
+                  <Loader />
+                </p>
+              ) : (
+                "Sign Up"
+              )}
             </Button>
             <p className='text-small-regular text-light-2 text-center mt-2'>
               Already have an account?

@@ -1,7 +1,7 @@
 import { ID, Query } from "appwrite";
 
 import { INewUser } from "@/types";
-import { account, appwriteConfig, avatars, databases, storage } from "./config";
+import { account, appwriteConfig, avatars, databases } from "./config";
 import { generateUsername } from "../utils";
 
 export async function createUserAccount(user: INewUser) {
@@ -20,7 +20,7 @@ export async function createUserAccount(user: INewUser) {
     const avatarURL = avatars.getInitials(user.name);
 
     // save user to database in Users Collections
-    const newUser = await saveUserToDB({
+    await saveUserToDB({
       accountID: newAccount.$id,
       name: newAccount.name,
       email: newAccount.email,
