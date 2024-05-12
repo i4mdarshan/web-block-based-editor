@@ -94,15 +94,8 @@ const SignInForm = () => {
             <Button
               type='submit'
               className='shad-button_primary'
-              disabled={isLoading}
             >
-              {isLoading ? (
-                <p>
-                  <Loader />
-                </p>
-              ) : (
-                "Sign In"
-              )}
+              Sign In
             </Button>
             <p className='text-small-regular text-light-2 text-center mt-2'>
               Don't have an account?
