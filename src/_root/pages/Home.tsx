@@ -17,7 +17,7 @@ const Home = () => {
   return (
     <div>
       <Button type='button' onClick={handleSignOut}>
-        Sign Out
+        Sign Out  
       </Button>
     </div>
   );
