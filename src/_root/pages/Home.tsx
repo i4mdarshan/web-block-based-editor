@@ -6,7 +6,6 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
-    console.log("Clicked logout");
     const signOut = await signOutAccount();
 
     if (signOut) {
