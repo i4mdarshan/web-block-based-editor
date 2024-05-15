@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
-import { IconChevronsLeft, IconMenu2, IconX } from '@tabler/icons-react'
+import { IconChevronsLeft, IconMenu2, IconX, IconCirclePlus } from '@tabler/icons-react'
 import { SidebarLayout, SidebarLayoutHeader } from './custom/SidebarLayout'
-import { Button } from './custom/Button'
-import Nav from './Nav'
+import { buttonVariants } from './custom/Button'
+import { Button, } from './custom/Button'
+import SidebarPageLinks from './SidebarPageLinks'
 import { cn } from '@/lib/utils'
-import { sidelinks } from '@/data/sidelinks'
-import { useNavigate } from 'react-router-dom'
-import { signOutAccount } from '@/lib/appwrite/api'
+import {
+  IconNotebook,
+} from '@tabler/icons-react'
+import { useUserContext } from '@/context/AuthContext'
+import { INavLink } from '@/types'
 
 interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
   isCollapsed: boolean
@@ -19,16 +22,72 @@ export default function Sidebar2({
   setIsCollapsed,
 }: SidebarProps) {
   const [navOpened, setNavOpened] = useState(false);
+  const { user } = useUserContext();
 
-  // const navigate = useNavigate();
+  const sidelinksData: INavLink[] = [
+    {
+      title: 'Page Title',
+      label: '',
+      href: '/',
+      icon: <IconNotebook size={18} />,
+    },
+    {
+      title: 'Page Title',
+      label: '',
+      href: '/tasks',
+      icon: <IconNotebook size={18} />,
+    },
+    {
+      title: 'Page Title',
+      label: '',
+      href: '/chats',
+      icon: <IconNotebook size={18} />,
+    },
+    {
+      title: 'Page Title',
+      label: '',
+      href: '/apps',
+      icon: <IconNotebook size={18} />,
+    },
+    {
+      title: 'Page Title',
+      label: '',
+      href: '',
+      icon: <IconNotebook size={18} />,
+    },
+    {
+      title: 'Page Title',
+      label: '',
+      href: '/users',
+      icon: <IconNotebook size={18} />,
+    },
+    {
+      title: 'Page Title',
+      label: '',
+      href: '/requests',
+      icon: <IconNotebook size={18} />,
+    },
+    {
+      title: 'Page Title',
+      label: '',
+      href: '/analysis',
+      icon: <IconNotebook size={18} />,
+    },
+    {
+      title: 'Page Title',
+      label: '',
+      href: '/extra-components',
+      icon: <IconNotebook size={18} />,
+    },
+    {
+      title: 'Page Title',
+      label: '',
+      href: '',
+      icon: <IconNotebook size={18} />,
+    },
+  ];
 
-  // const handleSignOut = async () => {
-  //   const signOut = await signOutAccount();
-
-  //   if (signOut) {
-  //     navigate(0);
-  //   }
-  // };
+  const [sidelinks, setSidelinks] = useState(sidelinksData);
 
   /* Make body not scrollable when navBar is opened */
   useEffect(() => {
@@ -89,8 +148,8 @@ export default function Sidebar2({
             <div
               className={`flex flex-col justify-end truncate ${isCollapsed ? 'invisible w-0' : 'visible w-auto'}`}
             >
-              <span className='font-medium'>Fullname</span>
-              <span className='text-xs'>@username</span>
+              <span className='font-medium'>{user.name}</span>
+              <span className='text-xs'>{user.username ? '@' + user.username : ''}</span>
             </div>
           </div>
 
@@ -108,14 +167,13 @@ export default function Sidebar2({
           </Button>
         </SidebarLayoutHeader>
 
-        {/* Navigation links */}
-        <Nav
+        {/* Page links */}
+        <SidebarPageLinks
           id='sidebar-menu'
-          className={`h-full flex-1 overflow-auto ${navOpened ? 'max-h-screen' : 'max-h-0 py-0 md:max-h-screen md:py-2'}`}
+          className={`h-full flex-1 overflow-auto`}
           closeNav={() => setNavOpened(false)}
           isCollapsed={isCollapsed}
           links={sidelinks}
-          // handleSignOut={handleSignOut}
         />
 
         {/* Scrollbar width toggle button */}
@@ -129,6 +187,23 @@ export default function Sidebar2({
             stroke={1.5}
             className={`h-5 w-5 ${isCollapsed ? 'rotate-180' : ''}`}
           />
+        </Button>
+
+        {/* New Page Button */}
+        <Button
+          className={cn(
+            buttonVariants({
+              variant: 'default',
+              size: 'sm',
+            }),
+            'h-8 justify-start text-wrap rounded-none px-6',
+          )}
+          aria-current='page'
+        >
+
+          <div><IconCirclePlus
+            stroke={1.5}
+            className={`h-5 w-5 ${isCollapsed ? 'rotate-180' : ''}`} /></div>
         </Button>
       </SidebarLayout>
     </aside>

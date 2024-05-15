@@ -21,3 +21,10 @@ export type IContextType = {
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   checkUserAuthorization: () => Promise<boolean | undefined>;
 };
+
+export interface INavLink {
+  title: string
+  label?: string
+  href: string
+  icon: JSX.Element
+}

@@ -1,20 +1,10 @@
+import { INavLink } from '@/types'
 import {
     IconNotebook,
     IconLogout,
   } from '@tabler/icons-react'
-  
-  export interface NavLink {
-    title: string
-    label?: string
-    href: string
-    icon: JSX.Element
-  }
-  
-  export interface SideLink extends NavLink {
-    sub?: NavLink[]
-  }
-  
-  export const sidelinks: SideLink[] = [
+
+  export const sidelinks: INavLink[] = [
     {
       title:'Page Title',
       label: '',
@@ -74,11 +64,5 @@ import {
       label: '',
       href: '',
       icon: <IconNotebook size={18} />,
-    },
-    {
-      title:'Sign Out',
-      label: '',
-      href: 'sign-out',
-      icon: <IconLogout size={18} />,
     },
   ]

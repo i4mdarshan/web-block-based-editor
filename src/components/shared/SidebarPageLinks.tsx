@@ -1,40 +1,25 @@
 import { Link } from 'react-router-dom'
-import { IconChevronDown } from '@tabler/icons-react'
-import { Button, buttonVariants } from './custom/Button'
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '../ui/collapsible'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '../ui/dropdown-menu'
+import { buttonVariants } from './custom/Button'
 
 import { cn } from '@/lib/utils'
 import useCheckActiveNav from '@/hooks/useCheckActiveNav'
-import { SideLink } from '@/data/sidelinks'
 import { Tooltip, TooltipProvider, TooltipTrigger,TooltipContent } from '../ui/tooltip'
+import { INavLink } from '@/types'
 
 
 interface NavProps extends React.HTMLAttributes<HTMLDivElement> {
   isCollapsed: boolean
-  links: SideLink[]
+  links: INavLink[]
   closeNav: () => void,
-  // handleSignOut: () =>void,
 }
 
-export default function Nav({
+export default function SidebarPageLinks({
   links,
   isCollapsed,
   className,
   closeNav,
 }: NavProps) {
-  const renderLink = ({ sub, ...rest }: SideLink) => {
+  const renderLink = ({ ...rest }: INavLink) => {
     const key = `${rest.title}-${rest.href}`;
 
     if (isCollapsed)
@@ -59,8 +44,7 @@ export default function Nav({
   )
 }
 
-interface NavLinkProps extends SideLink {
-  subLink?: boolean
+interface NavLinkProps extends INavLink {
   closeNav: () => void
 }
 
@@ -70,7 +54,6 @@ function NavLink({
   label,
   href,
   closeNav,
-  subLink = false,
 }: NavLinkProps) {
   const { checkActiveNav } = useCheckActiveNav();
   
