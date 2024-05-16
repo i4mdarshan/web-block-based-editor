@@ -15,3 +15,7 @@ export function generateUsername(name: string): string {
 
   return username;
 }
+
+export function getCurrentUnixTimestamp() {
+  return Math.floor(Date.now() / 1000);
+}
