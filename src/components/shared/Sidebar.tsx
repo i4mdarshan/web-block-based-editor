@@ -4,7 +4,7 @@ import { SidebarLayout, SidebarLayoutHeader } from './custom/SidebarLayout'
 import { buttonVariants } from './custom/Button'
 import { Button, } from './custom/Button'
 import SidebarPageLinks from './SidebarPageLinks'
-import { cn } from '@/lib/utils'
+import { cn, getCurrentUnixTimestamp } from '@/lib/utils'
 import {
   IconNotebook,
 } from '@tabler/icons-react'
@@ -16,7 +16,7 @@ interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
   setIsCollapsed: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function Sidebar2({
+export default function Sidebar({
   className,
   isCollapsed,
   setIsCollapsed,
@@ -167,10 +167,40 @@ export default function Sidebar2({
           </Button>
         </SidebarLayoutHeader>
 
+        {/* New Page Button */}
+        <Button
+          className={cn(
+            buttonVariants({
+              variant: 'default',
+              size: 'sm',
+            }),
+            'h-8 justify-center text-wrap rounded-5 px-6 mx-1 my-1',
+          )}
+          aria-current='page'
+          onClick={() => setSidelinks(() => {
+            const href = "/new-page-"+ getCurrentUnixTimestamp();
+
+            return [...sidelinks,    {
+              title: 'New Page',
+              label: '',
+              href: href,
+              icon: <IconNotebook size={18} />,
+            }]
+          })}
+        >
+
+          <div><IconCirclePlus
+            stroke={1.5}
+            className={`h-5 w-5 ${isCollapsed ? 'rotate-180' : ''}`} /></div>
+            {
+              !isCollapsed && <span className='mx-2'>Add New Page</span>
+            }
+        </Button>
+
         {/* Page links */}
         <SidebarPageLinks
           id='sidebar-menu'
-          className={`h-full flex-1 overflow-auto`}
+          className={`h-full flex-1 overflow-auto ${navOpened ? 'max-h-screen' : 'max-h-0 py-0 md:max-h-screen md:py-2'}`}
           closeNav={() => setNavOpened(false)}
           isCollapsed={isCollapsed}
           links={sidelinks}
@@ -187,23 +217,6 @@ export default function Sidebar2({
             stroke={1.5}
             className={`h-5 w-5 ${isCollapsed ? 'rotate-180' : ''}`}
           />
-        </Button>
-
-        {/* New Page Button */}
-        <Button
-          className={cn(
-            buttonVariants({
-              variant: 'default',
-              size: 'sm',
-            }),
-            'h-8 justify-start text-wrap rounded-none px-6',
-          )}
-          aria-current='page'
-        >
-
-          <div><IconCirclePlus
-            stroke={1.5}
-            className={`h-5 w-5 ${isCollapsed ? 'rotate-180' : ''}`} /></div>
         </Button>
       </SidebarLayout>
     </aside>

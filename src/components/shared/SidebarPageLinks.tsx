@@ -20,7 +20,7 @@ export default function SidebarPageLinks({
   closeNav,
 }: NavProps) {
   const renderLink = ({ ...rest }: INavLink) => {
-    const key = `${rest.title}-${rest.href}`;
+    const key = `${Math.abs(Math.random() * 0.5 * 10000)}`;
 
     if (isCollapsed)
       return <NavLinkIcon {...rest} key={key} closeNav={closeNav} />
