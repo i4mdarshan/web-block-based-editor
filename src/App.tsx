@@ -6,9 +6,10 @@ import SignInForm from "./_auth/forms/SignInForm";
 import SignUpForm from "./_auth/forms/SignUpForm";
 import { Home } from "./_root/pages";
 import { Toaster } from "./components/ui/sonner";
+import PageContent from "./_root/pages/PageContent";
 const App = () => {
   return (
-    <main className='flex h-screen'>
+    <>
       <Routes>
         {/* public routes */}
         <Route element={<AuthLayout />}>
@@ -18,10 +19,11 @@ const App = () => {
         {/* private routes */}
         <Route element={<RootLayout />}>
           <Route index element={<Home />}></Route>
+          <Route path="/page/:title" element={<PageContent />}></Route>
         </Route>
       </Routes>
       <Toaster position='top-center' richColors/>
-    </main>
+    </>
   );
 };
 

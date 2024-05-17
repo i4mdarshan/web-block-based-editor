@@ -56,10 +56,10 @@ function NavLink({
   closeNav,
 }: NavLinkProps) {
   const { checkActiveNav } = useCheckActiveNav();
-  
+  const pageLink = '/page'+href;
   return (
     <Link
-      to={href}
+      to={pageLink}
       onClick={closeNav}
       className={cn(
         buttonVariants({
@@ -82,12 +82,13 @@ function NavLink({
 }
 
 function NavLinkIcon({ title, icon, label, href }: NavLinkProps) {
-  const { checkActiveNav } = useCheckActiveNav()
+  const { checkActiveNav } = useCheckActiveNav();
+  const pageLink = '/page'+href;
   return (
     <Tooltip delayDuration={0}>
       <TooltipTrigger asChild>
         <Link
-          to={href}
+          to={pageLink}
           className={cn(
             buttonVariants({
               variant: checkActiveNav(href) ? 'secondary' : 'ghost',

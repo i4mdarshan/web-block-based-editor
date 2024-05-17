@@ -5,12 +5,17 @@ import { Outlet } from "react-router-dom";
 const RootLayout = () => {
   const [isCollapsed, setIsCollapsed] = useIsCollapsed()
   return (
-    <div className='w-full md:flex'>
-      <section className='flex flex-1 h-full'>
+    <>
+      <div className='relative h-full overflow-hidden bg-background'>
         <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed}/>
-        <Outlet />
-      </section>
-    </div>
+        <main
+          id='content'
+          className={`overflow-x-hidden pt-16 transition-[margin] md:overflow-y-hidden md:pt-0 ${isCollapsed ? 'md:ml-14' : 'md:ml-64'} h-full`}
+        >
+          <Outlet />
+        </main>
+      </div>
+    </>
   );
 };
 
