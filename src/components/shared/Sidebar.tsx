@@ -26,63 +26,27 @@ export default function Sidebar({
 
   const sidelinksData: INavLink[] = [
     {
-      title: 'Page Title',
+      title: 'Page Title 1',
       label: '',
-      href: '/',
+      href: '/page-title-1',
       icon: <IconNotebook size={18} />,
     },
     {
-      title: 'Page Title',
+      title: 'Page Title 5',
       label: '',
-      href: '/tasks',
+      href: '/page-title-5',
       icon: <IconNotebook size={18} />,
     },
     {
-      title: 'Page Title',
+      title: 'Page Title 2',
       label: '',
-      href: '/chats',
+      href: '/page-title-2',
       icon: <IconNotebook size={18} />,
     },
     {
-      title: 'Page Title',
+      title: 'Page Title 3',
       label: '',
-      href: '/apps',
-      icon: <IconNotebook size={18} />,
-    },
-    {
-      title: 'Page Title',
-      label: '',
-      href: '',
-      icon: <IconNotebook size={18} />,
-    },
-    {
-      title: 'Page Title',
-      label: '',
-      href: '/users',
-      icon: <IconNotebook size={18} />,
-    },
-    {
-      title: 'Page Title',
-      label: '',
-      href: '/requests',
-      icon: <IconNotebook size={18} />,
-    },
-    {
-      title: 'Page Title',
-      label: '',
-      href: '/analysis',
-      icon: <IconNotebook size={18} />,
-    },
-    {
-      title: 'Page Title',
-      label: '',
-      href: '/extra-components',
-      icon: <IconNotebook size={18} />,
-    },
-    {
-      title: 'Page Title',
-      label: '',
-      href: '',
+      href: '/page-title-3',
       icon: <IconNotebook size={18} />,
     },
   ];
@@ -176,11 +140,10 @@ export default function Sidebar({
             }),
             'h-8 justify-center text-wrap rounded-5 px-6 mx-1 my-1',
           )}
-          aria-current='page'
           onClick={() => setSidelinks(() => {
-            const href = "/new-page-"+ getCurrentUnixTimestamp();
+            const href = "/new-page-" + getCurrentUnixTimestamp();
 
-            return [...sidelinks,    {
+            return [...sidelinks, {
               title: 'New Page',
               label: '',
               href: href,
@@ -192,9 +155,9 @@ export default function Sidebar({
           <div><IconCirclePlus
             stroke={1.5}
             className={`h-5 w-5 ${isCollapsed ? 'rotate-180' : ''}`} /></div>
-            {
-              !isCollapsed && <span className='mx-2'>Add New Page</span>
-            }
+          {
+            !isCollapsed && <span className='mx-2'>Add New Page</span>
+          }
         </Button>
 
         {/* Page links */}
