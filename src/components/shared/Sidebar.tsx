@@ -140,11 +140,10 @@ export default function Sidebar({
             }),
             'h-8 justify-center text-wrap rounded-5 px-6 mx-1 my-1',
           )}
-          aria-current='page'
           onClick={() => setSidelinks(() => {
-            const href = "/new-page-"+ getCurrentUnixTimestamp();
+            const href = "/new-page-" + getCurrentUnixTimestamp();
 
-            return [...sidelinks,    {
+            return [...sidelinks, {
               title: 'New Page',
               label: '',
               href: href,
@@ -156,9 +155,9 @@ export default function Sidebar({
           <div><IconCirclePlus
             stroke={1.5}
             className={`h-5 w-5 ${isCollapsed ? 'rotate-180' : ''}`} /></div>
-            {
-              !isCollapsed && <span className='mx-2'>Add New Page</span>
-            }
+          {
+            !isCollapsed && <span className='mx-2'>Add New Page</span>
+          }
         </Button>
 
         {/* Page links */}

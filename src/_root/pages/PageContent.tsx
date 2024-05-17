@@ -13,25 +13,25 @@ import { useParams } from "react-router-dom";
 const PageContent = () => {
   const { title } = useParams();
   return (
-    <div className="flex justify-start mt-16 h-screen">
+    <div className="flex flex-col sm:gap-4 sm:py-4 h-svh">
       {/* {title} */}
-      {false ? (
+      {true ? (
         <div className="flex flex-1 justify-center items-center flex-col">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button size="sm">
                 <CirclePlus className="mr-2 h-4 w-4" />
-                Add Row
+                Add Block
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem>
                 <TextCursor className="mr-2 h-4 w-4" />
-                Text
+                <span>Text</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Image className="mr-2 h-4 w-4" />
-                Image
+                <span>Image</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
