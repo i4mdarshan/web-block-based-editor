@@ -82,7 +82,7 @@ export default function Sidebar({
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 256 256'
-              className={`transition-all ${isCollapsed ? 'h-6 w-6' : 'h-8 w-8'}`}
+              className='transition-all h-8 w-8'
             >
               <rect width='256' height='256' fill='none'></rect>
               <line
@@ -112,8 +112,7 @@ export default function Sidebar({
             <div
               className={`flex flex-col justify-end truncate ${isCollapsed ? 'invisible w-0' : 'visible w-auto'}`}
             >
-              <span className='font-medium'>{user.name}</span>
-              <span className='text-xs'>{user.username ? '@' + user.username : ''}</span>
+              <span className='font-medium'>Web Block Editor</span>
             </div>
           </div>
 
