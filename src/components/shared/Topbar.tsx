@@ -1,8 +1,10 @@
 import { LogOut, Settings } from "lucide-react";
 import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { useUserContext } from "@/context/AuthContext";
 
 const Topbar = () => {
+  const { user } = useUserContext();
   return <>
     <div className="relative">
       <header className="fixed top-0 left-0 right-0 z-30 h-14 px-4 flex items-center justify-end gap-4 border-b bg-background">
@@ -14,7 +16,7 @@ const Topbar = () => {
               className="overflow-hidden rounded-full"
             >
               <img
-                src="/placeholder-user.jpg"
+                src={user.imageURL || "/assets/icons/profile-placeholder.svg"}
                 width={36}
                 height={36}
                 alt="Avatar"
@@ -23,7 +25,9 @@ const Topbar = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel>
+              <span className='text-sm'>{user.username ? '@' + user.username : ''}</span>
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />
