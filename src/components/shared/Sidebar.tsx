@@ -1,19 +1,22 @@
-import { useEffect, useState } from 'react'
-import { IconChevronsLeft, IconMenu2, IconX, IconCirclePlus } from '@tabler/icons-react'
-import { SidebarLayout, SidebarLayoutHeader } from './custom/SidebarLayout'
-import { buttonVariants } from './custom/Button'
-import { Button, } from './custom/Button'
-import SidebarPageLinks from './SidebarPageLinks'
-import { cn, getCurrentUnixTimestamp } from '@/lib/utils'
+import { useEffect, useState } from "react";
 import {
-  IconNotebook,
-} from '@tabler/icons-react'
-import { useUserContext } from '@/context/AuthContext'
-import { INavLink } from '@/types'
+  IconChevronsLeft,
+  IconMenu2,
+  IconX,
+  IconCirclePlus,
+} from "@tabler/icons-react";
+import { SidebarLayout, SidebarLayoutHeader } from "./custom/SidebarLayout";
+import { buttonVariants } from "./custom/Button";
+import { Button } from "./custom/Button";
+import SidebarPageLinks from "./SidebarPageLinks";
+import { cn, getCurrentUnixTimestamp } from "@/lib/utils";
+import { IconNotebook } from "@tabler/icons-react";
+import { useUserContext } from "@/context/AuthContext";
+import { INavLink } from "@/types";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
-  isCollapsed: boolean
-  setIsCollapsed: React.Dispatch<React.SetStateAction<boolean>>
+  isCollapsed: boolean;
+  setIsCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function Sidebar({
@@ -26,27 +29,27 @@ export default function Sidebar({
 
   const sidelinksData: INavLink[] = [
     {
-      title: 'Page Title 1',
-      label: '',
-      href: '/page-title-1',
+      title: "Page Title 1",
+      label: "",
+      href: "/page-title-1",
       icon: <IconNotebook size={18} />,
     },
     {
-      title: 'Page Title 5',
-      label: '',
-      href: '/page-title-5',
+      title: "Page Title 5",
+      label: "",
+      href: "/page-title-5",
       icon: <IconNotebook size={18} />,
     },
     {
-      title: 'Page Title 2',
-      label: '',
-      href: '/page-title-2',
+      title: "Page Title 2",
+      label: "",
+      href: "/page-title-2",
       icon: <IconNotebook size={18} />,
     },
     {
-      title: 'Page Title 3',
-      label: '',
-      href: '/page-title-3',
+      title: "Page Title 3",
+      label: "",
+      href: "/page-title-3",
       icon: <IconNotebook size={18} />,
     },
   ];
@@ -56,29 +59,33 @@ export default function Sidebar({
   /* Make body not scrollable when navBar is opened */
   useEffect(() => {
     if (navOpened) {
-      document.body.classList.add('overflow-hidden')
+      document.body.classList.add("overflow-hidden");
     } else {
-      document.body.classList.remove('overflow-hidden')
+      document.body.classList.remove("overflow-hidden");
     }
-  }, [navOpened])
+  }, [navOpened]);
 
   return (
     <aside
       className={cn(
-        `fixed left-0 right-0 top-0 z-50 w-full border-r-2 border-r-muted transition-[width] md:bottom-0 md:right-auto md:h-svh ${isCollapsed ? 'md:w-14' : 'md:w-64'}`,
+        `fixed left-0 right-0 top-0 z-50 w-full border-r-2 border-r-muted transition-[width] md:bottom-0 md:right-auto md:h-svh ${
+          isCollapsed ? "md:w-14" : "md:w-64"
+        }`,
         className
       )}
     >
       {/* Overlay in mobile */}
       <div
         onClick={() => setNavOpened(false)}
-        className={`absolute inset-0 transition-[opacity] delay-100 duration-700 ${navOpened ? 'h-svh opacity-50' : 'h-0 opacity-0'} w-full bg-black md:hidden`}
+        className={`absolute inset-0 transition-[opacity] delay-100 duration-700 ${
+          navOpened ? "h-svh opacity-50" : "h-0 opacity-0"
+        } w-full bg-black md:hidden`}
       />
 
       <SidebarLayout>
         {/* Header */}
         <SidebarLayoutHeader className='sticky top-0 justify-between px-4 py-3 shadow md:px-4'>
-          <div className={`flex items-center ${!isCollapsed ? 'gap-2' : ''}`}>
+          <div className={`flex items-center ${!isCollapsed ? "gap-2" : ""}`}>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 256 256'
@@ -110,7 +117,9 @@ export default function Sidebar({
               <span className='sr-only'>Website Name</span>
             </svg>
             <div
-              className={`flex flex-col justify-end truncate ${isCollapsed ? 'invisible w-0' : 'visible w-auto'}`}
+              className={`flex flex-col justify-end truncate ${
+                isCollapsed ? "invisible w-0" : "visible w-auto"
+              }`}
             >
               <span className='font-medium'>Web Block Editor</span>
             </div>
@@ -131,7 +140,7 @@ export default function Sidebar({
         </SidebarLayoutHeader>
 
         {/* New Page Button */}
-        <Button
+        {/* <Button
           className={cn(
             buttonVariants({
               variant: 'default',
@@ -157,15 +166,19 @@ export default function Sidebar({
           {
             !isCollapsed && <span className='mx-2'>Add New Page</span>
           }
-        </Button>
+        </Button> */}
 
         {/* Page links */}
         <SidebarPageLinks
           id='sidebar-menu'
-          className={`h-full flex-1 overflow-auto ${navOpened ? 'max-h-screen' : 'max-h-0 py-0 md:max-h-screen md:py-2'}`}
+          className={`h-full flex-1 overflow-auto ${
+            navOpened ? "max-h-screen" : "max-h-0 py-0 md:max-h-screen md:py-2"
+          }`}
           closeNav={() => setNavOpened(false)}
           isCollapsed={isCollapsed}
           links={sidelinks}
+          setSidelinks={setSidelinks}
+          sidelinks={sidelinks}
         />
 
         {/* Scrollbar width toggle button */}
@@ -177,10 +190,10 @@ export default function Sidebar({
         >
           <IconChevronsLeft
             stroke={1.5}
-            className={`h-5 w-5 ${isCollapsed ? 'rotate-180' : ''}`}
+            className={`h-5 w-5 ${isCollapsed ? "rotate-180" : ""}`}
           />
         </Button>
       </SidebarLayout>
     </aside>
-  )
+  );
 }
