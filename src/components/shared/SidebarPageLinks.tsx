@@ -47,7 +47,7 @@ export default function SidebarPageLinks({
       )}
     >
       <TooltipProvider delayDuration={0}>
-        <nav className='grid gap-1 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2'>
+        <nav className='grid gap-1 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-1'>
           {links.map(renderLink)}
           <Button
             className={cn(
@@ -55,7 +55,7 @@ export default function SidebarPageLinks({
                 variant: "default",
                 size: "sm",
               }),
-              "h-8 justify-center rounded-none text-wrap px-1 my-1"
+              `h-8 justify-center rounded-1 text-wrap px-1 my-1 ${!isCollapsed ? "mx-1" : "mx-0"}`
             )}
             onClick={() =>
               setSidelinks(() => {
